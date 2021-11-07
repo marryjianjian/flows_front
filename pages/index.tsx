@@ -2,8 +2,16 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,  LabelList } from 'recharts';
+
+const data = [ { name: 'Page A', host: 4000, pv: 2400, amt: 2400, }, { name: 'Page B', host: 3000, pv: 1398, amt: 2210, }, { name: 'Page C', host: 2000, pv: 9800, amt: 2290, }, { name: 'Page D', host: 2780, pv: 3908, amt: 2000, }, { name: 'Page E', host: 1890, pv: 4800, amt: 2181, }, { name: 'Page F', host: 2390, pv: 3800, amt: 2500, }, { name: 'Page G', host: 3490, pv: 4300, amt: 2100, }, ];
+
 
 const Home: NextPage = () => {
+  data.sort(function(a, b) {
+    return a.host > b.host ? -1 : 1;
+  });
+  const height = data.length * 44;
   return (
     <div className={styles.container}>
       <Head>
@@ -13,44 +21,30 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <h4 className={styles.title}>
+          Top 10 Web site
+        </h4>
+        <BarChart
+          width={800}
+          height={height}
+          data={data}
+          margin={{
+            top: 20,
+            right: 20,
+            left: 20,
+            bottom: 20,
+          }}
+          layout="vertical"
+        >
+          <XAxis type="number" />
+          <YAxis dataKey="name" type="category" />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="host" fill="#0EEAC0">
+            <LabelList dataKey="host" position="insideRight" />
+          </Bar>
+        </BarChart>
       </main>
 
       <footer className={styles.footer}>
