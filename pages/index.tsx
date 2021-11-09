@@ -7,10 +7,16 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,  LabelList
 
 const { serverRuntimeConfig } = getConfig()
 
-// FIXME: ignore type error
-const Home: NextPage = ({resdata}) => {
+type HostInfo = {
+  domain: string
+  count: number
+  date?: string
+}
+
+const Home = (props : {data : HostInfo[]}) => {
+  var resdata = props.data;
   resdata.sort(function(a, b) {
-    return a.host > b.host ? -1 : 1;
+    return a.count > b.count ? -1 : 1;
   });
   var height = resdata.length * 44;
   if (height < 100) {
@@ -41,12 +47,12 @@ const Home: NextPage = ({resdata}) => {
           layout="vertical"
         >
           <XAxis type="number" />
-          <YAxis dataKey="name" type="category" />
+          <YAxis dataKey="domain" type="category" />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="host" fill="#0EEAC0">
-            <LabelList dataKey="host" position="insideRight" />
+          <Bar dataKey="count" fill="#0EEAC0">
+            <LabelList dataKey="count" position="insideRight" />
           </Bar>
         </BarChart>
       </main>
@@ -75,15 +81,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
   const res = await fetch(serverRuntimeConfig.backend_url)
-  const resdata = await res.json()
+  const data = await res.json()
 
-  if (!resdata) {
+  if (!data) {
     return {
       notFound: true,
     }
   }
   // Pass data to the page via props
-  return { props: { resdata } }
+  return { props: { data } }
 }
 
 export default Home

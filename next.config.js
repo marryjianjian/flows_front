@@ -5,9 +5,4 @@ module.exports = {
   },
   reactStrictMode: true,
   poweredByHeader: false,
-  typescript: {
-    // !! WARN !!
-    // ignore error for now
-    ignoreBuildErrors: true,
-  },
 }
