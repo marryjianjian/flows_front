@@ -32,7 +32,7 @@ const Home = (props : {data : HostInfo[]}) => {
 
       <main className={styles.main}>
         <h4 className={styles.title}>
-          Top 10 Web site
+          Top Web site
         </h4>
         <BarChart
           width={800}
