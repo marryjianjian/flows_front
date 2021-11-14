@@ -35,7 +35,7 @@ const Home = (props : {data : HostInfo[]}) => {
           Top Web site
         </h4>
         <BarChart
-          width={800}
+          width={1000}
           height={height}
           data={resdata}
           margin={{
@@ -47,7 +47,7 @@ const Home = (props : {data : HostInfo[]}) => {
           layout="vertical"
         >
           <XAxis type="number" />
-          <YAxis dataKey="domain" type="category" />
+          <YAxis dataKey="domain" type="category" width={300} />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Legend />
