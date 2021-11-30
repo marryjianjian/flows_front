@@ -5,6 +5,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import TopBarChart from '../components/topbar'
 import HostInfo from '../models/host'
+import DateAeraChart from '../components/dateaera'
 
 const { serverRuntimeConfig } = getConfig()
 
@@ -26,6 +27,7 @@ const Home = (props: { data: HostInfo[] }) => {
       </Head>
 
       <TopBarChart data={props.data} />
+      <DateAeraChart />
 
       <footer className={styles.footer}>
         <a
