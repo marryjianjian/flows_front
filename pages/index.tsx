@@ -4,20 +4,14 @@ import getConfig from 'next/config'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import TopBarChart from '../components/topbar'
-import HostInfo from '../models/host'
+import { HostInfo, LastDaysInfo } from '../models/host'
 import DateAeraChart from '../components/dateaera'
+import { useEffect, useState } from 'react'
 
 const { serverRuntimeConfig } = getConfig()
 
-const Home = (props: { data: HostInfo[] }) => {
-  var resdata = props.data;
-  resdata.sort(function (a, b) {
-    return a.count > b.count ? -1 : 1;
-  });
-  var height = resdata.length * 44;
-  if (height < 100) {
-    height = 150;
-  }
+const Home = (props: { last7dayscount: LastDaysInfo[], top10domainscount : HostInfo[] }) => {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -26,8 +20,8 @@ const Home = (props: { data: HostInfo[] }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <TopBarChart data={props.data} />
-      <DateAeraChart />
+      <TopBarChart data={props.top10domainscount} />
+      <DateAeraChart data={props.last7dayscount} />
 
       <footer className={styles.footer}>
         <a
@@ -47,21 +41,22 @@ const Home = (props: { data: HostInfo[] }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Fetch data from external API
-  if (!serverRuntimeConfig.backend_url) {
+  if (!serverRuntimeConfig.backend_host) {
     return {
       notFound: true,
     }
   }
-  const res = await fetch(serverRuntimeConfig.backend_url)
-  const data = await res.json()
+  const host = serverRuntimeConfig.backend_host
+  const last7dayscount = await (await fetch(host + "/last7dayscount")).json()
+  const top10domainscount = await (await fetch(host + "/json")).json()
 
-  if (!data) {
+  if (!last7dayscount || !top10domainscount) {
     return {
       notFound: true,
     }
   }
-  // Pass data to the page via props
-  return { props: { data } }
+  // Pass host to the page via props
+  return { props: { last7dayscount, top10domainscount } }
 }
 
 export default Home

@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList } from 'recharts'
-import HostInfo from '../models/host'
+import { HostInfo } from '../models/host'
 
 const TopBarChart = (props: { data: HostInfo[] }) => {
   var resdata = props.data;
@@ -22,10 +22,10 @@ const TopBarChart = (props: { data: HostInfo[] }) => {
         height={height}
         data={resdata}
         margin={{
-          top: 20,
-          right: 20,
-          left: 20,
-          bottom: 20,
+          top: 10,
+          right: 10,
+          left: 10,
+          bottom: 10,
         }}
         layout="vertical"
       >
