@@ -47,8 +47,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
   const host = serverRuntimeConfig.backend_host
-  const last7dayscount = await (await fetch(host + "/last7dayscount")).json()
-  const top10domainscount = await (await fetch(host + "/json")).json()
+  const last7dayscount = await (await fetch(host + "/last7daystatistics")).json()
+  const top10domainscount = await (await fetch(host + "/top10domains")).json()
 
   if (!last7dayscount || !top10domainscount) {
     return {
