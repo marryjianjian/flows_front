@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   serverRuntimeConfig: {
-    backend_url: process.env.BACKEND_URL,
+    backend_host: process.env.BACKEND_HOST,
   },
   reactStrictMode: true,
   poweredByHeader: false,
