@@ -15,13 +15,17 @@ const DateAeraChart = (props: { data: LastDaysInfo[] }) => {
       { "date_name": "2011-12-05", "domain_count": 18 },
     ]
   }
+  resdata.forEach(e => {
+    var date = e["date_name"]
+    e["date_name"] = date.substr(0, 10)
+  })
   resdata.sort(function (a, b) {
     return a.date_name > b.date_name ? 1 : -1;
   })
   return (
     <main className={styles.main}>
       <AreaChart width={800} height={250} data={resdata}
-        margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+        margin={{ top: 10, right: 40, left: 20, bottom: 10 }}>
         <defs>
           <linearGradient id="colorPv" x1={0} y1={0} x2={0} y2={1}>
             <stop offset="5%" stopColor="#8884d8" stopOpacity={1} />
