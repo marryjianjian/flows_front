@@ -17,7 +17,7 @@ const DateAeraChart = (props: { data: LastDaysInfo[] }) => {
   }
   resdata.forEach(e => {
     var date = e["date_name"]
-    e["date_name"] = date.substr(0, 10)
+    e["date_name"] = date.substring(0, 10)
   })
   resdata.sort(function (a, b) {
     return a.date_name > b.date_name ? 1 : -1;

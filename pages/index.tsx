@@ -10,6 +10,21 @@ import { useEffect, useState } from 'react'
 
 const { serverRuntimeConfig } = getConfig()
 
+const last7datestr = () : string[] => {
+  let days_unixstamps = new Array(7);
+  for (let i = 0; i < days_unixstamps.length; i++) {
+    if (i === 0) {
+      days_unixstamps[i] = Date.now();
+    } else {
+      days_unixstamps[i] = days_unixstamps[i-1] - 86400 * 1000;
+    }
+  }
+  return days_unixstamps.map((v) => {
+    var date = new Date(v);
+    return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+  });
+}
+
 const Home = (props: { last7dayscount: LastDaysInfo[], top10domainscount : HostInfo[] }) => {
 
   return (
@@ -44,7 +59,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
   const host = serverRuntimeConfig.backend_host
-  const last7dayscount = await (await fetch(host + "/last7daystatistics")).json()
+  const last7dayscount = await (await fetch(host + "/daystatistics", {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(last7datestr())
+  })).json()
   const top10domainscount = await (await fetch(host + "/top10domains")).json()
 
   if (!last7dayscount || !top10domainscount) {
