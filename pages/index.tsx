@@ -10,6 +10,13 @@ import { useEffect, useState } from 'react'
 
 const { serverRuntimeConfig } = getConfig()
 
+const pad_md = (s : string, n : number) : string => {
+  if (s.length < n) {
+    s = '0'.repeat(n - s.length) + s;
+  }
+  return s
+}
+
 const last7datestr = () : string[] => {
   let days_unixstamps = new Array(7);
   for (let i = 0; i < days_unixstamps.length; i++) {
@@ -21,7 +28,10 @@ const last7datestr = () : string[] => {
   }
   return days_unixstamps.map((v) => {
     var date = new Date(v);
-    return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+    var year = date.getFullYear().toString();
+    var month = pad_md((date.getMonth() + 1).toString(), 2);
+    var day = pad_md(date.getDate().toString(), 2);
+    return [year, month, day].join('-');
   });
 }
 
